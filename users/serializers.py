@@ -1,7 +1,10 @@
 from rest_framework import serializers
-from .models import Users
-from snippets.serializers import UsersSerializer
-class UsersSerializer(serializers.ModelSerializer):
+from django.contrib.auth import get_user_model
+from books.models import BorrowedBook
+
+class UserSerializer(serializers.ModelSerializer):
+    borrowed_books = serializers.PrimaryKeyRelatedField(many=True, queryset=BorrowedBook.objects.all())
+
     class Meta:
-        model = Users
-        fields = ['id', 'email', 'first_name', 'last_name', 'password',]
+        model = get_user_model()
+        fields = ['id', 'email', 'first_name', 'last_name', 'phone', 'borrowed_books']
