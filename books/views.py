@@ -1,6 +1,6 @@
 #Users can get all books
 from rest_framework.decorators import api_view, permission_classes
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework import status
@@ -10,8 +10,6 @@ from .models import Book
 import json
 
 @api_view(["GET"])
-@csrf_exempt
-@permission_classes([IsAuthenticated])
 def get_books(request):
     books = Book.objects.all()
     serializer = BookSerializer(books, many=True)
@@ -19,7 +17,7 @@ def get_books(request):
 
 @api_view(["POST"])
 @csrf_exempt
-@permission_classes([IsAuthenticated])
+@permission_classes([IsAuthenticated, IsAdminUser])
 def add_book(request):
     payload = json.loads(request.body)
     try:
@@ -35,8 +33,6 @@ def add_book(request):
         return JsonResponse({'error': 'Something terrible went wrong'}, safe=False, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 @api_view(["GET"])
-@csrf_exempt
-@permission_classes([IsAuthenticated])
 def get_book(request, book_id):
     try:
         book = Book.objects.get(id=book_id)
@@ -50,7 +46,7 @@ def get_book(request, book_id):
 #User can update a book entry by id
 @api_view(["PUT"])
 @csrf_exempt
-@permission_classes([IsAuthenticated])
+@permission_classes([IsAuthenticated, IsAdminUser])
 def update_book(request, book_id):
     payload = json.loads(request.body)
     try:
@@ -68,7 +64,7 @@ def update_book(request, book_id):
 #User can delete a book entry by # id
 @api_view(["DELETE"])
 @csrf_exempt
-@permission_classes([IsAuthenticated])
+@permission_classes([IsAuthenticated, IsAdminUser])
 def delete_book(request, book_id):
     try:
         book = Book.objects.get(id=book_id)
