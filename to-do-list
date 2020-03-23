@@ -1,0 +1,4 @@
+1. test endpoints with postman
+2. install docker and docker-compose and containerize apps
+3. install pytest and test django
+4. install jest and enzyme and test react

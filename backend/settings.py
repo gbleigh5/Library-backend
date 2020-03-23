@@ -36,11 +36,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'corsheaders',              #added this
-    'rest_framework',           #added this
-    'djoser',                   #added this
-    'rest_framework.authtoken',  #added this
-    'rest_framework_simplejwt', #added this
+    'corsheaders',
+    'rest_framework',
+    'rest_framework_simplejwt',
     'books',
     'users'
 ]
@@ -48,9 +46,7 @@ INSTALLED_APPS = [
 # Authentication Policies
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework.authentication.TokenAuthentication',
-        'rest_framework.authentication.SessionAuthentication',
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
+        'rest_framework_simplejwt.authentication.JWTAuthentication'
     ]
 }
 

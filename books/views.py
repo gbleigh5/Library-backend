@@ -4,9 +4,10 @@ from rest_framework.permissions import IsAuthenticated
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework import status
+from django.core.exceptions import ObjectDoesNotExist
 from .serializers import BookSerializer
 from .models import Book
-from django.core.exceptions import ObjectDoesNotExist
+import json
 
 @api_view(["GET"])
 @csrf_exempt
@@ -15,8 +16,6 @@ def get_books(request):
     books = Book.objects.all()
     serializer = BookSerializer(books, many=True)
     return JsonResponse({'books': serializer.data}, safe=False, status=status.HTTP_200_OK)
-
-    #Users can add a book
 
 @api_view(["POST"])
 @csrf_exempt
@@ -32,8 +31,6 @@ def add_book(request):
         )
         serializer = BookSerializer(book)
         return JsonResponse({'books': serializer.data}, safe=False, status=status.HTTP_201_CREATED)
-    except ObjectDoesNotExist as e:
-        return JsonResponse({'error': str(e)}, safe=False, status=status.HTTP_404_NOT_FOUND)
     except Exception:
         return JsonResponse({'error': 'Something terrible went wrong'}, safe=False, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 

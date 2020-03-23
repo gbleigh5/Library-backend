@@ -15,7 +15,6 @@ class Book(models.Model):
 class BorrowedBook(models.Model):
     book_title = models.CharField(max_length=120)
     user = models.ForeignKey(get_user_model(), related_name='borrowed_books', on_delete=models.CASCADE)
-    phone_number = models.IntegerField()
     date_of_Pickup = models.DateTimeField()
     date_of_return = models.DateTimeField()
 
