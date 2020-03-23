@@ -17,7 +17,7 @@ class UserList(APIView):
         User = get_user_model()
         users = User.objects.all()
         serializer = UserSerializer(users, many=True)
-        return Response(serializer.data)
+        return JsonResponse({'users': serializer.data}, safe=False, status=status.HTTP_200_OK)
 
     def post(self, request, format=None):
         return add_user_type(request)

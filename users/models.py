@@ -5,6 +5,7 @@ from django.contrib.auth.models import (
 from django.db import models
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
+from books.models import Book
 
 class UserManager(BaseUserManager):
     def create_user(self, email, first_name, last_name, password, phone,
@@ -67,3 +68,12 @@ class User(AbstractBaseUser, PermissionsMixin):
         "Does the user have a specific permission?"
         # Simplest possible answer: Yes, always
         return True
+
+class BorrowedBook(models.Model):
+    book = models.ForeignKey(Book, on_delete=models.DO_NOTHING)
+    user = models.ForeignKey(User, related_name='borrowed_books', on_delete=models.CASCADE)
+    date_of_Pickup = models.DateTimeField()
+    date_of_return = models.DateTimeField()
+
+    def _str_(self):
+        return self.title

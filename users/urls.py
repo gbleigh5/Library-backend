@@ -10,5 +10,6 @@ urlpatterns = [
     path('admin/', views.add_superuser),
     path('token/', jwt_views.TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('token/refresh/', jwt_views.TokenRefreshView.as_view(), name='token_refresh'),
-    path('<int:pk>/', views.UserDetail.as_view())
+    path('<int:pk>/', views.UserDetail.as_view()),
+    path('<int:pk>/books', views.UserBorrowedBooks.as_view())
 ]
