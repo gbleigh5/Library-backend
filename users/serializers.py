@@ -12,8 +12,8 @@ class BorrowedBookSerializer(serializers.ModelSerializer):
         model = BorrowedBook
         fields = ['book_title', 'user', 'phone_number', 'date_of_Pickup', 'date_of_return']
 
-class UserBorrowedBooksSerializer(serializers.ModelSerializer):
-    borrowed_books = serializers.PrimaryKeyRelatedField(many=True, queryset=BorrowedBook.objects.all())
+class BorrowedBooksSerializer(serializers.ModelSerializer):
+    user = serializers.PrimaryKeyRelatedField(many=True, queryset=BorrowedBook.objects.all())
 
     class Meta:
         model = get_user_model()

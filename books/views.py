@@ -21,12 +21,7 @@ def get_books(request):
 def add_book(request):
     payload = json.loads(request.body)
     try:
-        book = Book.objects.create(
-            title=payload["title"],
-            description=payload["description"],
-            author=payload["author"],
-            year_of_release=payload["year_of_release"]
-        )
+        book = Book.objects.create(**payload)
         serializer = BookSerializer(book)
         return JsonResponse({'books': serializer.data}, safe=False, status=status.HTTP_201_CREATED)
     except Exception:
